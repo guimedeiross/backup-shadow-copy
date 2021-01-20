@@ -1,9 +1,7 @@
-Add-Type -AssemblyName PresentationFramework;
-$ErrorActionPreference = "Stop";
-
 $testServerOnline = Test-Connection -ComputerName ncomp-wks-02 -Count 3 -Quiet;
 
 If(-Not $testServerOnline) {
+    Add-Type -AssemblyName PresentationFramework;
     $msgBox = [System.Windows.MessageBox]::Show('Servidor inacessível','Verificar Servidor Online','OK','Error');
     $msgBox;
     If($msgBox -eq "OK") {
@@ -18,7 +16,7 @@ $d  = $s2.DeviceObject + "\";
 
 cmd /c mklink /d C:\shadowcopy "$d";
 
-robocopy "C:\shadowcopy\Users\evandro\Documents\Arquivos do Outlook" "C:\Users\evandro\Documents\teste\" /E /ZB
+robocopy "C:\shadowcopy\Users\evandro\Documents\Arquivos do Outlook" "C:\Users\evandro\Documents\teste\" /E /ZB;
 
 "vssadmin delete shadows /Shadow=""$($s2.ID.ToLower())"" /Quiet" | iex;
 
