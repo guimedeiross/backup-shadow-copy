@@ -1,3 +1,16 @@
+Add-Type -AssemblyName PresentationFramework;
+$ErrorActionPreference = "Stop";
+
+$testServerOnline = Test-Connection -ComputerName ncomp-wks-02 -Count 3 -Quiet;
+
+If(-Not $testServerOnline) {
+    $msgBox = [System.Windows.MessageBox]::Show('Servidor inacessível','Verificar Servidor Online','OK','Error');
+    $msgBox;
+    If($msgBox -eq "OK") {
+        break;
+    }
+}
+
 $s1 = (Get-WmiObject -List Win32_ShadowCopy).Create("C:\", "ClientAccessible");
 $s2 = Get-WmiObject Win32_ShadowCopy | Where-Object { $_.ID -eq $s1.ShadowID };
 
